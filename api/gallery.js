@@ -102,7 +102,16 @@ module.exports = async function handler(req, res) {
     });
 
   } catch (error) {
-    const msg = error.message || String(error);
+    let msg;
+    if (error && error.message) {
+      msg = error.message;
+    } else if (error && error.error && error.error.message) {
+      msg = error.error.message;
+    } else if (error && typeof error === 'object') {
+      msg = JSON.stringify(error);
+    } else {
+      msg = String(error);
+    }
     if (msg.includes('Invalid API key') || msg.includes('api_key')) {
       return res.status(500).json({ error: 'Invalid Cloudinary API key', fix: 'Check CLOUDINARY_API_KEY in Vercel env vars' });
     }
