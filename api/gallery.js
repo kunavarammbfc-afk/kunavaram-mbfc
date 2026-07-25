@@ -15,7 +15,6 @@ function getCategoryFromResource(resource) {
   const source = folder || pid;
   if (source.includes('birthday') || source.includes('celebration')) return 'birthday';
   if (source.includes('movie') || source.includes('film') || source.includes('release')) return 'movie';
-  if (source.includes('box') || source.includes('office') || source.includes('milestone')) return 'boxoffice';
   if (source.includes('fan') || source.includes('meet')) return 'fanmeets';
   return null;
 }
@@ -47,7 +46,6 @@ module.exports = async function handler(req, res) {
     const gallery = {
       birthday: { photos: [], videos: [] },
       movie: { photos: [], videos: [] },
-      boxoffice: { photos: [], videos: [] },
       fanmeets: { photos: [], videos: [] }
     };
 
