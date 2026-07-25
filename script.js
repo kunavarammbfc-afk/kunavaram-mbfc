@@ -483,7 +483,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!cloudName) return '';
         var base = 'https://res.cloudinary.com/' + cloudName;
         if (options && options.resourceType === 'video') {
-            return base + '/video/upload/' + publicId;
+            return base + '/video/upload/f_mp4/' + publicId;
         }
         var parts = [];
         if (options) {
@@ -496,22 +496,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function downloadFile(url, filename, mimeType) {
-        fetch(url).then(function(res) {
-            return res.blob(mimeType ? { type: mimeType } : undefined);
-        }).then(function(blob) {
-            var blobUrl = URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = blobUrl;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            setTimeout(function() {
-                document.body.removeChild(a);
-                URL.revokeObjectURL(blobUrl);
-            }, 100);
-        }).catch(function() {
-            window.open(url, '_blank');
-        });
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function() { document.body.removeChild(a); }, 100);
     }
 
     var lightboxOverlay = null;
