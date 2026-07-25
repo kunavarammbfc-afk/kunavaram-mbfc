@@ -496,11 +496,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function downloadFile(url, filename, mimeType) {
+        var downloadUrl = API_BASE + '/download?url=' + encodeURIComponent(url) + '&filename=' + encodeURIComponent(filename);
         var a = document.createElement('a');
-        a.href = url;
+        a.href = downloadUrl;
         a.download = filename;
-        a.target = '_blank';
-        a.rel = 'noopener';
         document.body.appendChild(a);
         a.click();
         setTimeout(function() { document.body.removeChild(a); }, 100);
