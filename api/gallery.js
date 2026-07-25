@@ -77,7 +77,9 @@ module.exports = async function handler(req, res) {
       if (isImg) {
         gallery[category].photos.push({ id: r.public_id, name: filename, url: r.secure_url, folder: r.asset_folder || '' });
       } else if (isVid) {
-        gallery[category].videos.push({ id: r.public_id, name: filename, url: r.secure_url, folder: r.asset_folder || '' });
+        var mp4Url = r.secure_url.replace('/video/upload/', '/video/upload/f_mp4/');
+        if (!mp4Url.endsWith('.mp4')) mp4Url += '.mp4';
+        gallery[category].videos.push({ id: r.public_id, name: filename, url: mp4Url, folder: r.asset_folder || '' });
       }
     }
 
