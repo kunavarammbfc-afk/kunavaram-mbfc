@@ -295,70 +295,85 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ============================================
-    // CLOUDINARY GALLERY SYSTEM (Auto-Sync from API)
+    // CLOUDINARY GALLERY SYSTEM (Zero hardcoded credentials)
+    // Cloud name fetched from /api/config or /api/gallery
     // ============================================
     
-    const CLOUD_NAME = 'tzlcekor';
-    const API_BASE = window.location.origin + '/api/gallery';
-    
+    const API_BASE = window.location.origin + '/api';
+    let cloudName = null;
     let galleryCache = null;
+    let configFetched = false;
+
+    async function getCloudName() {
+        if (cloudName) return cloudName;
+        try {
+            const res = await fetch(API_BASE + '/config');
+            if (res.ok) {
+                const data = await res.json();
+                cloudName = data.cloudName;
+                configFetched = true;
+                return cloudName;
+            }
+        } catch (e) {}
+        return null;
+    }
+
+    function cloudinaryImageUrl(publicId, options) {
+        if (!cloudName) return '';
+        var base = 'https://res.cloudinary.com/' + cloudName;
+        if (options && options.resourceType === 'video') {
+            return base + '/video/upload/' + publicId;
+        }
+        var parts = [];
+        if (options) {
+            if (options.width) parts.push('w_' + options.width);
+            if (options.height) parts.push('h_' + options.height);
+            if (options.crop) parts.push('c_' + options.crop);
+        }
+        var transform = parts.length ? parts.join(',') + '/' : '';
+        return base + '/image/upload/' + transform + publicId;
+    }
 
     function downloadFile(url, filename) {
-        const a = document.createElement('a');
+        var a = document.createElement('a');
         a.href = url;
         a.download = filename;
         a.target = '_blank';
         a.rel = 'noopener noreferrer';
         document.body.appendChild(a);
         a.click();
-        setTimeout(() => document.body.removeChild(a), 100);
+        setTimeout(function() { document.body.removeChild(a); }, 100);
     }
 
-    let lightboxOverlay = null;
-    let lightboxImg = null;
+    var lightboxOverlay = null;
+    var lightboxImg = null;
 
     function createLightbox() {
         if (lightboxOverlay) return;
         lightboxOverlay = document.createElement('div');
         lightboxOverlay.className = 'lightbox-overlay';
-        lightboxOverlay.innerHTML = `
-            <button class="lightbox-close">&times;</button>
-            <div class="lightbox-content">
-                <img src="" alt="">
-                <div class="lightbox-actions">
-                    <button class="lightbox-btn lightbox-download">
-                        <i class="fas fa-download"></i> Download
-                    </button>
-                </div>
-            </div>
-        `;
+        lightboxOverlay.innerHTML = '<button class="lightbox-close">&times;</button>' +
+            '<div class="lightbox-content"><img src="" alt="">' +
+            '<div class="lightbox-actions"><button class="lightbox-btn lightbox-download">' +
+            '<i class="fas fa-download"></i> Download</button></div></div>';
         document.body.appendChild(lightboxOverlay);
         lightboxImg = lightboxOverlay.querySelector('img');
         lightboxOverlay.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
-        lightboxOverlay.addEventListener('click', function(e) {
-            if (e.target === this) closeLightbox();
-        });
+        lightboxOverlay.addEventListener('click', function(e) { if (e.target === this) closeLightbox(); });
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape' && lightboxOverlay.classList.contains('active')) closeLightbox();
         });
-
-        // Touch swipe down to close lightbox on mobile
-        let touchStartY = 0;
-        lightboxOverlay.addEventListener('touchstart', function(e) {
-            touchStartY = e.touches[0].clientY;
-        }, { passive: true });
+        var touchStartY = 0;
+        lightboxOverlay.addEventListener('touchstart', function(e) { touchStartY = e.touches[0].clientY; }, { passive: true });
         lightboxOverlay.addEventListener('touchend', function(e) {
-            const touchEndY = e.changedTouches[0].clientY;
-            if (touchEndY - touchStartY > 80) closeLightbox();
+            if (e.changedTouches[0].clientY - touchStartY > 80) closeLightbox();
         }, { passive: true });
     }
 
     function openLightbox(imgUrl, downloadUrl, filename) {
         createLightbox();
         lightboxImg.src = imgUrl;
-        lightboxOverlay.querySelector('.lightbox-download').onclick = function() {
-            downloadFile(downloadUrl, filename);
-        };
+        lightboxOverlay.querySelector('.lightbox-download').onclick = function() { downloadFile(downloadUrl, filename); };
         lightboxOverlay.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
@@ -371,53 +386,37 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function createImageItem(photo) {
-        const item = document.createElement('div');
+        var item = document.createElement('div');
         item.className = 'gallery-item';
-        const fileName = photo.name + '.jpg';
-        const imgUrl = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/w_400,h_300,c_fill/${photo.id}`;
-        const fullImgUrl = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${photo.id}`;
-        
-        item.innerHTML = `
-            <img src="${imgUrl}" alt="" loading="lazy">
-            <div class="gallery-overlay">
-                <button class="gallery-btn view-btn" title="View Full Size">
-                    <i class="fas fa-expand"></i>
-                </button>
-                <button class="gallery-btn download-btn" title="Download">
-                    <i class="fas fa-download"></i>
-                </button>
-            </div>
-        `;
+        var fileName = photo.name + '.jpg';
+        var thumbUrl = cloudinaryImageUrl(photo.id, { width: 400, height: 300, crop: 'fill' });
+        var fullUrl = cloudinaryImageUrl(photo.id);
+        item.innerHTML = '<img src="' + thumbUrl + '" alt="" loading="lazy">' +
+            '<div class="gallery-overlay">' +
+            '<button class="gallery-btn view-btn" title="View"><i class="fas fa-expand"></i></button>' +
+            '<button class="gallery-btn download-btn" title="Download"><i class="fas fa-download"></i></button></div>';
         item.querySelector('.view-btn').addEventListener('click', function(e) {
             e.preventDefault();
-            openLightbox(fullImgUrl, fullImgUrl, fileName);
+            openLightbox(fullUrl, fullUrl, fileName);
         });
         item.querySelector('.download-btn').addEventListener('click', function(e) {
             e.preventDefault();
-            downloadFile(fullImgUrl, fileName);
+            downloadFile(fullUrl, fileName);
         });
         return item;
     }
 
     function createVideoItem(video) {
-        const item = document.createElement('div');
+        var item = document.createElement('div');
         item.className = 'gallery-item video-item';
-        const fileName = video.name + '.mp4';
-        const thumbUrl = `https://res.cloudinary.com/${CLOUD_NAME}/video/upload/w_400,h_300,c_fill/${video.id}.jpg`;
-        const videoUrl = `https://res.cloudinary.com/${CLOUD_NAME}/video/upload/${video.id}`;
-        
-        item.innerHTML = `
-            <img src="${thumbUrl}" alt="" loading="lazy" onerror="this.src='https://via.placeholder.com/400x300/1a1a1a/d4a843?text=Video'">
-            <div class="play-icon"><i class="fas fa-play"></i></div>
-            <div class="gallery-overlay">
-                <button class="gallery-btn view-btn" title="Play Video">
-                    <i class="fas fa-play"></i>
-                </button>
-                <button class="gallery-btn download-btn" title="Download">
-                    <i class="fas fa-download"></i>
-                </button>
-            </div>
-        `;
+        var fileName = video.name + '.mp4';
+        var thumbUrl = cloudinaryImageUrl(video.id + '.jpg', { width: 400, height: 300, crop: 'fill', resourceType: 'video' });
+        var videoUrl = cloudinaryImageUrl(video.id, { resourceType: 'video' });
+        item.innerHTML = '<img src="' + thumbUrl + '" alt="" loading="lazy" onerror="this.src=\'https://via.placeholder.com/400x300/1a1a1a/d4a843?text=Video\'">' +
+            '<div class="play-icon"><i class="fas fa-play"></i></div>' +
+            '<div class="gallery-overlay">' +
+            '<button class="gallery-btn view-btn" title="Play"><i class="fas fa-play"></i></button>' +
+            '<button class="gallery-btn download-btn" title="Download"><i class="fas fa-download"></i></button></div>';
         item.querySelector('.view-btn').addEventListener('click', function(e) {
             e.preventDefault();
             window.open(videoUrl, '_blank');
@@ -432,32 +431,34 @@ document.addEventListener('DOMContentLoaded', function() {
     async function fetchGallery() {
         if (galleryCache) return galleryCache;
         try {
-            const res = await fetch(API_BASE);
-            if (!res.ok) throw new Error('API error');
-            galleryCache = await res.json();
+            var res = await fetch(API_BASE + '/gallery');
+            if (!res.ok) throw new Error('API returned ' + res.status);
+            var data = await res.json();
+            if (data.cloudName) cloudName = data.cloudName;
+            galleryCache = data.gallery || data;
             return galleryCache;
         } catch (e) {
-            // Fallback to static media-config.js if API unavailable
+            console.error('Gallery API error:', e.message);
             return null;
         }
     }
 
     async function loadGallery(modalId, folderKey) {
-        const modal = document.getElementById(modalId);
+        var modal = document.getElementById(modalId);
         if (!modal) return;
-        const galleryContainer = modal.querySelector('.cloudinary-gallery');
-        if (!galleryContainer) return;
-        const photosGrid = galleryContainer.querySelector('.photos-grid');
-        const videosGrid = galleryContainer.querySelector('.videos-grid');
-        const photosLoading = galleryContainer.querySelector('.photos-loading');
-        const videosLoading = galleryContainer.querySelector('.videos-loading');
+        var gc = modal.querySelector('.cloudinary-gallery');
+        if (!gc) return;
+        var photosGrid = gc.querySelector('.photos-grid');
+        var videosGrid = gc.querySelector('.videos-grid');
+        var photosLoading = gc.querySelector('.photos-loading');
+        var videosLoading = gc.querySelector('.videos-loading');
 
         if (photosLoading) photosLoading.style.display = 'none';
         if (videosLoading) videosLoading.style.display = 'none';
 
-        const apiData = await fetchGallery();
-        let photos = [];
-        let videos = [];
+        var apiData = await fetchGallery();
+        var photos = [];
+        var videos = [];
 
         if (apiData && apiData[folderKey]) {
             photos = apiData[folderKey].photos || [];
@@ -467,23 +468,23 @@ document.addEventListener('DOMContentLoaded', function() {
         if (photos.length === 0) {
             photosGrid.innerHTML = '<div class="gallery-empty"><i class="fas fa-images"></i><p>No photos yet</p></div>';
         } else {
-            photos.forEach(p => photosGrid.appendChild(createImageItem(p)));
+            photos.forEach(function(p) { photosGrid.appendChild(createImageItem(p)); });
         }
 
         if (videos.length === 0) {
             videosGrid.innerHTML = '<div class="gallery-empty"><i class="fas fa-video"></i><p>No videos yet</p></div>';
         } else {
-            videos.forEach(v => videosGrid.appendChild(createVideoItem(v)));
+            videos.forEach(function(v) { videosGrid.appendChild(createVideoItem(v)); });
         }
     }
 
     function initCloudinaryGalleries() {
-        const modalObserver = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
+        var modalObserver = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
                 if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-                    const modal = mutation.target;
+                    var modal = mutation.target;
                     if (modal.classList.contains('active')) {
-                        const folderKey = modal.dataset.folder;
+                        var folderKey = modal.dataset.folder;
                         if (folderKey && !modal.dataset.loaded) {
                             modal.dataset.loaded = 'true';
                             loadGallery(modal.id, folderKey);
@@ -492,11 +493,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         });
-
-        document.querySelectorAll('.modal-overlay[data-folder]').forEach(modal => {
+        document.querySelectorAll('.modal-overlay[data-folder]').forEach(function(modal) {
             modalObserver.observe(modal, { attributes: true });
         });
     }
 
+    // Pre-fetch cloud name on page load
+    getCloudName();
     initCloudinaryGalleries();
 });
