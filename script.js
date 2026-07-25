@@ -296,25 +296,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ============================================
     // CLOUDINARY GALLERY SYSTEM (Zero hardcoded credentials)
-    // Cloud name fetched from /api/config or /api/gallery
     // ============================================
     
     const API_BASE = window.location.origin + '/api';
     let cloudName = null;
     let galleryCache = null;
-    let configFetched = false;
+    let configAttempts = 0;
+    const CONFIG_MAX_RETRIES = 3;
 
     async function getCloudName() {
         if (cloudName) return cloudName;
-        try {
-            const res = await fetch(API_BASE + '/config');
-            if (res.ok) {
-                const data = await res.json();
-                cloudName = data.cloudName;
-                configFetched = true;
-                return cloudName;
+        while (configAttempts < CONFIG_MAX_RETRIES) {
+            configAttempts++;
+            try {
+                var res = await fetch(API_BASE + '/config');
+                if (res.ok) {
+                    var data = await res.json();
+                    if (data.cloudName) {
+                        cloudName = data.cloudName;
+                        return cloudName;
+                    }
+                }
+            } catch (e) {}
+            if (configAttempts < CONFIG_MAX_RETRIES) {
+                await new Promise(function(r) { setTimeout(r, 1000 * configAttempts); });
             }
-        } catch (e) {}
+        }
         return null;
     }
 
@@ -432,15 +439,30 @@ document.addEventListener('DOMContentLoaded', function() {
         if (galleryCache) return galleryCache;
         try {
             var res = await fetch(API_BASE + '/gallery');
-            if (!res.ok) throw new Error('API returned ' + res.status);
+            if (!res.ok) {
+                var errData = null;
+                try { errData = await res.json(); } catch(e) {}
+                var errMsg = (errData && errData.error) ? errData.error : 'Server error ' + res.status;
+                var fixMsg = (errData && errData.fix) ? errData.fix : '';
+                throw new Error(errMsg + (fixMsg ? ' — ' + fixMsg : ''));
+            }
             var data = await res.json();
             if (data.cloudName) cloudName = data.cloudName;
             galleryCache = data.gallery || data;
             return galleryCache;
         } catch (e) {
             console.error('Gallery API error:', e.message);
-            return null;
+            return { _error: e.message };
         }
+    }
+
+    function showGalleryError(container, message) {
+        var errorDiv = document.createElement('div');
+        errorDiv.className = 'gallery-error';
+        errorDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i>' +
+            '<p>Could not load media</p>' +
+            '<p class="gallery-error-detail">' + message + '</p>';
+        container.appendChild(errorDiv);
     }
 
     async function loadGallery(modalId, folderKey) {
@@ -453,10 +475,16 @@ document.addEventListener('DOMContentLoaded', function() {
         var photosLoading = gc.querySelector('.photos-loading');
         var videosLoading = gc.querySelector('.videos-loading');
 
+        var apiData = await fetchGallery();
+
         if (photosLoading) photosLoading.style.display = 'none';
         if (videosLoading) videosLoading.style.display = 'none';
 
-        var apiData = await fetchGallery();
+        if (apiData && apiData._error) {
+            showGalleryError(gc, apiData._error);
+            return;
+        }
+
         var photos = [];
         var videos = [];
 
@@ -498,7 +526,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Pre-fetch cloud name on page load
     getCloudName();
     initCloudinaryGalleries();
 });

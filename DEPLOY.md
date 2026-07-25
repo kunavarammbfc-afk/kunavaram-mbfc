@@ -95,9 +95,9 @@ mahesh-babu-fan-page/
 ├── index.html            # Main HTML (5 pages + modals)
 ├── styles.css            # All styling
 ├── script.js             # Gallery + navigation logic
-├── cloudinary-config.js  # Cloud name config
-├── media-config.js       # Static fallback (optional)
+├── donations-data.js     # Google Sheets config
 ├── api/gallery.js        # Auto-sync serverless function
+├── api/config.js         # Cloud name config endpoint
 ├── package.json          # Dependencies
 ├── vercel.json           # Vercel config
 ├── background.jpg        # Page background

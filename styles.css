@@ -912,6 +912,35 @@ body {
     font-size: 14px;
 }
 
+.gallery-error {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--gray);
+    grid-column: 1 / -1;
+    background: rgba(220, 53, 69, 0.08);
+    border: 1px solid rgba(220, 53, 69, 0.2);
+    border-radius: 12px;
+    margin: 10px 0;
+}
+
+.gallery-error i {
+    font-size: 36px;
+    color: rgba(220, 53, 69, 0.6);
+    margin-bottom: 10px;
+    display: block;
+}
+
+.gallery-error p {
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.gallery-error-detail {
+    font-size: 12px;
+    opacity: 0.7;
+    word-break: break-word;
+}
+
 .photos-loading,
 .videos-loading {
     text-align: center;
