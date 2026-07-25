@@ -163,7 +163,7 @@
         </div>
 
         <!-- BOX OFFICE MODAL -->
-        <div class="modal-overlay" id="modal-boxoffice" data-folder="boxoffice">
+        <div class="modal-overlay" id="modal-boxoffice">
             <div class="modal-content modal-large">
                 <button class="modal-close">&times;</button>
                 <div class="modal-header">
@@ -172,104 +172,67 @@
                     <div class="modal-line"></div>
                 </div>
                 <div class="modal-body">
-                    <div class="cloudinary-gallery">
-                        <div class="gallery-section">
-                            <h3><i class="fas fa-images"></i> Photos</h3>
-                            <div class="photos-loading"><i class="fas fa-spinner fa-spin"></i> Loading photos...</div>
-                            <div class="gallery-grid photos-grid"></div>
-                        </div>
-                    </div>
-                    <div class="boxoffice-stats">
+                    <div class="boxoffice-stats" id="boxofficeStats">
                         <div class="stat-card stat-hit">
-                            <div class="stat-number">2</div>
+                            <div class="stat-number" id="statHit">-</div>
                             <div class="stat-label">HIT</div>
                         </div>
                         <div class="stat-card stat-avg">
-                            <div class="stat-number">7</div>
+                            <div class="stat-number" id="statAvg">-</div>
                             <div class="stat-label">AVERAGE</div>
                         </div>
                         <div class="stat-card stat-flop">
-                            <div class="stat-number">8</div>
+                            <div class="stat-number" id="statFlop">-</div>
                             <div class="stat-label">FLOP</div>
                         </div>
                         <div class="stat-card stat-superhit">
-                            <div class="stat-number">1</div>
+                            <div class="stat-number" id="statSuperhit">-</div>
                             <div class="stat-label">SUPER HIT</div>
                         </div>
                         <div class="stat-card stat-blockbuster">
-                            <div class="stat-number">5</div>
+                            <div class="stat-number" id="statBlockbuster">-</div>
                             <div class="stat-label">BLOCKBUSTER</div>
                         </div>
                         <div class="stat-card stat-industry">
-                            <div class="stat-number">5</div>
+                            <div class="stat-number" id="statIndustry">-</div>
                             <div class="stat-label">INDUSTRY HIT</div>
                         </div>
                     </div>
-                    <div class="boxoffice-highlight">
+                    <div class="boxoffice-highlight" id="boxofficeHighlight">
                         <div class="highlight-card">
                             <i class="fas fa-trophy"></i>
                             <div>
                                 <span class="highlight-title">Highest Grosser</span>
-                                <span class="highlight-value">Guntur Kaaram — ₹255 Cr</span>
+                                <span class="highlight-value" id="highlightHighest">Loading...</span>
                             </div>
                         </div>
                         <div class="highlight-card">
                             <i class="fas fa-chart-line"></i>
                             <div>
                                 <span class="highlight-title">Most Profitable</span>
-                                <span class="highlight-value">Pokiri — ₹54 Cr Profit (12→66)</span>
+                                <span class="highlight-value" id="highlightProfit">Loading...</span>
                             </div>
                         </div>
                         <div class="highlight-card">
                             <i class="fas fa-film"></i>
                             <div>
                                 <span class="highlight-title">Total Films</span>
-                                <span class="highlight-value">28 Released + 1 Coming Soon</span>
+                                <span class="highlight-value" id="highlightTotal">Loading...</span>
                             </div>
                         </div>
                     </div>
+                    <div class="boxoffice-sheet-loading" id="boxofficeLoading">
+                        <i class="fas fa-spinner fa-spin"></i> Loading data from Google Sheets...
+                    </div>
+                    <div class="boxoffice-sheet-error" id="boxofficeError" style="display:none;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>Could not load box office data</p>
+                        <p class="gallery-error-detail" id="boxofficeErrorMsg"></p>
+                    </div>
                     <div class="movie-table-container">
-                        <table class="movie-table">
-                            <thead>
-                                <tr>
-                                    <th>Year</th>
-                                    <th>Movie</th>
-                                    <th>Budget (₹ Cr)</th>
-                                    <th>Worldwide Gross (₹ Cr)</th>
-                                    <th>Verdict</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>1999</td><td>Raja Kumarudu</td><td>3</td><td>10</td><td><span class="verdict hit">HIT</span></td></tr>
-                                <tr><td>2000</td><td>Yuvaraju</td><td>4</td><td>8</td><td><span class="verdict avg">AVERAGE</span></td></tr>
-                                <tr><td>2000</td><td>Vamsi</td><td>5</td><td>7</td><td><span class="verdict flop">FLOP</span></td></tr>
-                                <tr><td>2001</td><td>Murari</td><td>8</td><td>22</td><td><span class="verdict blockbuster">BLOCKBUSTER</span></td></tr>
-                                <tr><td>2002</td><td>Takkari Donga</td><td>10</td><td>20</td><td><span class="verdict avg">AVERAGE</span></td></tr>
-                                <tr><td>2002</td><td>Bobby</td><td>12</td><td>16</td><td><span class="verdict flop">FLOP</span></td></tr>
-                                <tr><td>2003</td><td>Okkadu</td><td>13</td><td>39</td><td><span class="verdict industry">INDUSTRY HIT</span></td></tr>
-                                <tr><td>2003</td><td>Nijam</td><td>8</td><td>12</td><td><span class="verdict avg">AVERAGE</span></td></tr>
-                                <tr><td>2004</td><td>Naani</td><td>15</td><td>20</td><td><span class="verdict flop">FLOP</span></td></tr>
-                                <tr><td>2004</td><td>Arjun</td><td>18</td><td>33</td><td><span class="verdict avg">AVERAGE</span></td></tr>
-                                <tr><td>2005</td><td>Athadu</td><td>16</td><td>32</td><td><span class="verdict hit">HIT</span></td></tr>
-                                <tr><td>2006</td><td>Pokiri</td><td>12</td><td>66</td><td><span class="verdict industry">INDUSTRY HIT</span></td></tr>
-                                <tr><td>2006</td><td>Sainikudu</td><td>26</td><td>31</td><td><span class="verdict flop">FLOP</span></td></tr>
-                                <tr><td>2007</td><td>Athidhi</td><td>28</td><td>38</td><td><span class="verdict avg">AVERAGE</span></td></tr>
-                                <tr><td>2010</td><td>Khaleja</td><td>30</td><td>45</td><td><span class="verdict flop">FLOP</span></td></tr>
-                                <tr><td>2011</td><td>Dookudu</td><td>35</td><td>101</td><td><span class="verdict industry">INDUSTRY HIT</span></td></tr>
-                                <tr><td>2011</td><td>Businessman</td><td>40</td><td>92</td><td><span class="verdict blockbuster">BLOCKBUSTER</span></td></tr>
-                                <tr><td>2012</td><td>SVSC</td><td>50</td><td>90</td><td><span class="verdict superhit">SUPER HIT</span></td></tr>
-                                <tr><td>2013</td><td>1: Nenokkadine</td><td>70</td><td>75</td><td><span class="verdict flop">FLOP</span></td></tr>
-                                <tr><td>2014</td><td>Aagadu</td><td>60</td><td>85</td><td><span class="verdict avg">AVERAGE</span></td></tr>
-                                <tr><td>2015</td><td>Srimanthudu</td><td>60</td><td>145</td><td><span class="verdict industry">INDUSTRY HIT</span></td></tr>
-                                <tr><td>2016</td><td>Brahmotsavam</td><td>75</td><td>87</td><td><span class="verdict flop">FLOP</span></td></tr>
-                                <tr><td>2017</td><td>Spyder</td><td>120</td><td>150</td><td><span class="verdict flop">FLOP</span></td></tr>
-                                <tr><td>2018</td><td>Bharat Ane Nenu</td><td>65</td><td>225</td><td><span class="verdict blockbuster">BLOCKBUSTER</span></td></tr>
-                                <tr><td>2019</td><td>Maharshi</td><td>100</td><td>176</td><td><span class="verdict blockbuster">BLOCKBUSTER</span></td></tr>
-                                <tr><td>2020</td><td>Sarileru Neekevvaru</td><td>85</td><td>215</td><td><span class="verdict industry">INDUSTRY HIT</span></td></tr>
-                                <tr><td>2022</td><td>Sarkaru Vaari Paata</td><td>125</td><td>205</td><td><span class="verdict blockbuster">BLOCKBUSTER</span></td></tr>
-                                <tr><td>2024</td><td>Guntur Kaaram</td><td>200</td><td>255</td><td><span class="verdict avg">AVERAGE</span></td></tr>
-                                <tr><td>2027</td><td>Varanasi</td><td>1000+</td><td>Coming Soon</td><td><span class="verdict upcoming">UPCOMING</span></td></tr>
-                            </tbody>
+                        <table class="movie-table" id="boxofficeTable" style="display:none;">
+                            <thead></thead>
+                            <tbody></tbody>
                         </table>
                     </div>
                 </div>

@@ -216,6 +216,160 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     renderDonationCards();
 
+    // ============================================
+    // BOX OFFICE - Live from Google Sheet
+    // ============================================
+    var boxofficeLoaded = false;
+
+    function renderBoxOffice() {
+        if (boxofficeLoaded) return;
+        if (typeof BOXOFFICE_SHEET_URL === 'undefined') return;
+
+        var loading = document.getElementById('boxofficeLoading');
+        var errorDiv = document.getElementById('boxofficeError');
+        var errorMsg = document.getElementById('boxofficeErrorMsg');
+        var table = document.getElementById('boxofficeTable');
+
+        fetch(BOXOFFICE_SHEET_URL)
+            .then(function(res) { return res.text(); })
+            .then(function(csv) {
+                var data = parseCSV(csv);
+                if (!data || data.rows.length === 0) {
+                    if (loading) loading.style.display = 'none';
+                    if (errorDiv) { errorDiv.style.display = 'block'; if (errorMsg) errorMsg.textContent = 'Sheet is empty'; }
+                    return;
+                }
+
+                boxofficeLoaded = true;
+                if (loading) loading.style.display = 'none';
+
+                var headers = data.headers;
+                var rows = data.rows;
+
+                var verdictIdx = -1;
+                var yearIdx = -1;
+                var movieIdx = -1;
+                var budgetIdx = -1;
+                var grossIdx = -1;
+
+                headers.forEach(function(h, i) {
+                    var hl = h.toLowerCase();
+                    if (hl.includes('verdict') || hl.includes('result')) verdictIdx = i;
+                    if (hl.includes('year')) yearIdx = i;
+                    if (hl.includes('movie') || hl.includes('film') || hl.includes('title')) movieIdx = i;
+                    if (hl.includes('budget')) budgetIdx = i;
+                    if (hl.includes('gross') || hl.includes('worldwide') || hl.includes('collection')) grossIdx = i;
+                });
+
+                var counts = { hit: 0, avg: 0, flop: 0, superhit: 0, blockbuster: 0, industry: 0 };
+                var highestGross = { movie: '', gross: 0 };
+                var mostProfit = { movie: '', profit: 0 };
+
+                rows.forEach(function(row) {
+                    var verdict = (verdictIdx >= 0 ? row[headers[verdictIdx]] : '').toUpperCase().trim();
+
+                    if (verdict.includes('INDUSTRY')) counts.industry++;
+                    else if (verdict.includes('BLOCKBUSTER')) counts.blockbuster++;
+                    else if (verdict.includes('SUPER')) counts.superhit++;
+                    else if (verdict.includes('HIT')) counts.hit++;
+                    else if (verdict.includes('AVERAGE') || verdict.includes('AVG')) counts.avg++;
+                    else if (verdict.includes('FLOP')) counts.flop++;
+
+                    if (grossIdx >= 0) {
+                        var grossVal = parseFloat((row[headers[grossIdx]] || '').replace(/[^0-9.]/g, ''));
+                        if (!isNaN(grossVal) && grossVal > highestGross.gross) {
+                            highestGross.gross = grossVal;
+                            highestGross.movie = movieIdx >= 0 ? row[headers[movieIdx]] : '';
+                        }
+                    }
+
+                    if (budgetIdx >= 0 && grossIdx >= 0) {
+                        var bud = parseFloat((row[headers[budgetIdx]] || '').replace(/[^0-9.]/g, ''));
+                        var gro = parseFloat((row[headers[grossIdx]] || '').replace(/[^0-9.]/g, ''));
+                        if (!isNaN(bud) && !isNaN(gro) && gro - bud > mostProfit.profit) {
+                            mostProfit.profit = gro - bud;
+                            mostProfit.movie = movieIdx >= 0 ? row[headers[movieIdx]] : '';
+                        }
+                    }
+                });
+
+                var statHit = document.getElementById('statHit');
+                var statAvg = document.getElementById('statAvg');
+                var statFlop = document.getElementById('statFlop');
+                var statSuperhit = document.getElementById('statSuperhit');
+                var statBlockbuster = document.getElementById('statBlockbuster');
+                var statIndustry = document.getElementById('statIndustry');
+
+                if (statHit) statHit.textContent = counts.hit;
+                if (statAvg) statAvg.textContent = counts.avg;
+                if (statFlop) statFlop.textContent = counts.flop;
+                if (statSuperhit) statSuperhit.textContent = counts.superhit;
+                if (statBlockbuster) statBlockbuster.textContent = counts.blockbuster;
+                if (statIndustry) statIndustry.textContent = counts.industry;
+
+                var hlHighest = document.getElementById('highlightHighest');
+                var hlProfit = document.getElementById('highlightProfit');
+                var hlTotal = document.getElementById('highlightTotal');
+
+                if (hlHighest) hlHighest.textContent = highestGross.movie ? highestGross.movie + ' — ₹' + highestGross.gross + ' Cr' : 'N/A';
+                if (hlProfit) hlProfit.textContent = mostProfit.movie ? mostProfit.movie + ' — ₹' + mostProfit.profit + ' Cr Profit' : 'N/A';
+                if (hlTotal) hlTotal.textContent = rows.length + ' Films';
+
+                if (table) {
+                    table.style.display = 'table';
+                    var thead = table.querySelector('thead');
+                    thead.innerHTML = '<tr><th>#</th>' + headers.map(function(h) { return '<th>' + h + '</th>'; }).join('') + '</tr>';
+                    var tbody = table.querySelector('tbody');
+                    tbody.innerHTML = '';
+                    rows.forEach(function(row, i) {
+                        var tr = '<tr><td class="row-num">' + (i + 1) + '</td>';
+                        headers.forEach(function(h) {
+                            var val = row[h] || '';
+                            var hl = h.toLowerCase();
+                            if (hl.includes('verdict') || hl.includes('result')) {
+                                var vu = val.toUpperCase().trim();
+                                var cls = '';
+                                if (vu.includes('INDUSTRY')) cls = 'industry';
+                                else if (vu.includes('BLOCKBUSTER')) cls = 'blockbuster';
+                                else if (vu.includes('SUPER')) cls = 'superhit';
+                                else if (vu.includes('HIT')) cls = 'hit';
+                                else if (vu.includes('AVERAGE') || vu.includes('AVG')) cls = 'avg';
+                                else if (vu.includes('FLOP')) cls = 'flop';
+                                else if (vu.includes('UPCOMING') || vu.includes('RELEASE')) cls = 'upcoming';
+                                if (cls) {
+                                    tr += '<td><span class="verdict ' + cls + '">' + val + '</span></td>';
+                                } else {
+                                    tr += '<td>' + val + '</td>';
+                                }
+                            } else {
+                                tr += '<td>' + val + '</td>';
+                            }
+                        });
+                        tr += '</tr>';
+                        tbody.innerHTML += tr;
+                    });
+                }
+            })
+            .catch(function(err) {
+                if (loading) loading.style.display = 'none';
+                if (errorDiv) { errorDiv.style.display = 'block'; if (errorMsg) errorMsg.textContent = err.message || 'Failed to fetch sheet'; }
+            });
+    }
+
+    var boxofficeModal = document.getElementById('modal-boxoffice');
+    if (boxofficeModal) {
+        var boObserver = new MutationObserver(function(mutations) {
+            mutations.forEach(function(m) {
+                if (m.type === 'attributes' && m.attributeName === 'class') {
+                    if (boxofficeModal.classList.contains('active')) {
+                        renderBoxOffice();
+                    }
+                }
+            });
+        });
+        boObserver.observe(boxofficeModal, { attributes: true });
+    }
+
     document.querySelectorAll('.celeb-card, .don-card, .bio-section, .value-card, .fact-item, .contact-item').forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(30px)';
@@ -341,9 +495,9 @@ document.addEventListener('DOMContentLoaded', function() {
         return base + '/image/upload/' + transform + publicId;
     }
 
-    function downloadFile(url, filename) {
+    function downloadFile(url, filename, mimeType) {
         fetch(url).then(function(res) {
-            return res.blob();
+            return res.blob(mimeType ? { type: mimeType } : undefined);
         }).then(function(blob) {
             var blobUrl = URL.createObjectURL(blob);
             var a = document.createElement('a');
@@ -362,17 +516,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var lightboxOverlay = null;
     var lightboxImg = null;
+    var lightboxVideo = null;
 
     function createLightbox() {
         if (lightboxOverlay) return;
         lightboxOverlay = document.createElement('div');
         lightboxOverlay.className = 'lightbox-overlay';
         lightboxOverlay.innerHTML = '<button class="lightbox-close">&times;</button>' +
-            '<div class="lightbox-content"><img src="" alt="">' +
+            '<div class="lightbox-content">' +
+            '<img src="" alt="">' +
+            '<video controls preload="none" style="display:none;max-width:100%;max-height:80vh;border-radius:8px;"></video>' +
             '<div class="lightbox-actions"><button class="lightbox-btn lightbox-download">' +
             '<i class="fas fa-download"></i> Download</button></div></div>';
         document.body.appendChild(lightboxOverlay);
         lightboxImg = lightboxOverlay.querySelector('img');
+        lightboxVideo = lightboxOverlay.querySelector('video');
         lightboxOverlay.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
         lightboxOverlay.addEventListener('click', function(e) { if (e.target === this) closeLightbox(); });
         document.addEventListener('keydown', function(e) {
@@ -385,9 +543,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }, { passive: true });
     }
 
-    function openLightbox(imgUrl, downloadUrl, filename) {
+    function openLightbox(mediaUrl, downloadUrl, filename, isVideo) {
         createLightbox();
-        lightboxImg.src = imgUrl;
+        if (isVideo) {
+            lightboxImg.style.display = 'none';
+            lightboxVideo.style.display = 'block';
+            lightboxVideo.src = mediaUrl;
+            lightboxVideo.load();
+        } else {
+            lightboxVideo.style.display = 'none';
+            lightboxVideo.pause();
+            lightboxImg.style.display = 'block';
+            lightboxImg.src = mediaUrl;
+        }
         lightboxOverlay.querySelector('.lightbox-download').onclick = function() { downloadFile(downloadUrl, filename); };
         lightboxOverlay.classList.add('active');
         document.body.style.overflow = 'hidden';
@@ -396,6 +564,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function closeLightbox() {
         if (lightboxOverlay) {
             lightboxOverlay.classList.remove('active');
+            if (lightboxVideo) { lightboxVideo.pause(); lightboxVideo.src = ''; }
             document.body.style.overflow = '';
         }
     }
@@ -412,7 +581,7 @@ document.addEventListener('DOMContentLoaded', function() {
             '<button class="gallery-btn download-btn" title="Download"><i class="fas fa-download"></i></button></div>';
         item.querySelector('.view-btn').addEventListener('click', function(e) {
             e.preventDefault();
-            openLightbox(fullUrl, fullUrl, fileName);
+            openLightbox(fullUrl, fullUrl, fileName, false);
         });
         item.querySelector('.download-btn').addEventListener('click', function(e) {
             e.preventDefault();
@@ -434,11 +603,11 @@ document.addEventListener('DOMContentLoaded', function() {
             '<button class="gallery-btn download-btn" title="Download"><i class="fas fa-download"></i></button></div>';
         item.querySelector('.view-btn').addEventListener('click', function(e) {
             e.preventDefault();
-            window.open(videoUrl, '_blank');
+            openLightbox(videoUrl, videoUrl, fileName, true);
         });
         item.querySelector('.download-btn').addEventListener('click', function(e) {
             e.preventDefault();
-            downloadFile(videoUrl, fileName);
+            downloadFile(videoUrl, fileName, 'video/mp4');
         });
         return item;
     }

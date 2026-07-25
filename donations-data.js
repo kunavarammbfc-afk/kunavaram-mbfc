@@ -24,3 +24,5 @@ var DONATIONS_SHEETS = {
         sheetUrl: 'https://docs.google.com/spreadsheets/d/1z4dcM0_3XpLur8tQeM9ePagTr-r89zBXccBsfqG8Yi8/gviz/tq?tqx=out:csv'
     }
 };
+
+var BOXOFFICE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/131-rJBSLT73716DNAx7yN8cs_ATFlWMp0JcQyeCtAGc/gviz/tq?tqx=out:csv';

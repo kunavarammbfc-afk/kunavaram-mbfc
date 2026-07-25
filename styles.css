@@ -941,6 +941,40 @@ body {
     word-break: break-word;
 }
 
+.boxoffice-sheet-loading {
+    text-align: center;
+    padding: 30px 20px;
+    color: var(--gray);
+    font-size: 14px;
+}
+
+.boxoffice-sheet-loading i {
+    color: var(--gold);
+    margin-right: 8px;
+}
+
+.boxoffice-sheet-error {
+    text-align: center;
+    padding: 30px 20px;
+    color: var(--gray);
+    background: rgba(220, 53, 69, 0.08);
+    border: 1px solid rgba(220, 53, 69, 0.2);
+    border-radius: 12px;
+    margin: 10px 0;
+}
+
+.boxoffice-sheet-error i {
+    font-size: 30px;
+    color: rgba(220, 53, 69, 0.6);
+    margin-bottom: 8px;
+    display: block;
+}
+
+.boxoffice-sheet-error p {
+    font-size: 14px;
+    margin: 5px 0;
+}
+
 .photos-loading,
 .videos-loading {
     text-align: center;
@@ -1001,6 +1035,14 @@ body {
     max-height: 80vh;
     border-radius: 8px;
     box-shadow: 0 0 60px rgba(212, 168, 67, 0.3);
+}
+
+.lightbox-content video {
+    max-width: 100%;
+    max-height: 80vh;
+    border-radius: 8px;
+    box-shadow: 0 0 60px rgba(212, 168, 67, 0.3);
+    outline: none;
 }
 
 .lightbox-actions {
@@ -1932,6 +1974,8 @@ body {
     }
 
     body {
+        background: url('background-mobile.jpg') no-repeat center center;
+        background-size: cover;
         background-attachment: scroll;
     }
 
@@ -2044,9 +2088,9 @@ body {
     }
 
     body {
-        background-attachment: scroll;
+        background: url('background-mobile.jpg') no-repeat center center;
         background-size: cover;
-        background-position: center;
+        background-attachment: scroll;
     }
 
     .background-overlay {
@@ -2069,6 +2113,10 @@ body {
     }
 
     .lightbox-content img {
+        max-height: 70vh;
+    }
+
+    .lightbox-content video {
         max-height: 70vh;
     }
 
