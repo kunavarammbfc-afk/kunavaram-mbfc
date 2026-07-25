@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <title>Kunavaram Mahesh Babu Fans Club</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Playfair+Display:wght@400;600;700;900&family=Poppins:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="cloudinary-config.js"></script>
+    <script src="media-config.js"></script>
+    <script src="donations-data.js"></script>
+</head>
+<body>
+    <div class="background-overlay"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-brand">
+            <span class="brand-icon"><i class="fas fa-crown"></i></span>
+            <span class="brand-text">KUNAVARAM MBFC</span>
+        </div>
+        <div class="nav-links" id="navLinks">
+            <a href="#" class="nav-link active" data-page="home"><i class="fas fa-home"></i> Home</a>
+            <a href="#" class="nav-link" data-page="celebrations"><i class="fas fa-glass-cheers"></i> Celebrations</a>
+            <a href="#" class="nav-link" data-page="donations"><i class="fas fa-hand-holding-heart"></i> Donations</a>
+            <a href="#" class="nav-link" data-page="mahesh"><i class="fas fa-star"></i> About Mahesh</a>
+            <a href="#" class="nav-link" data-page="about"><i class="fas fa-users"></i> About Us</a>
+        </div>
+        <div class="hamburger" id="hamburger">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+
+    <main class="content">
+        <!-- HOME PAGE -->
+        <section class="page active" id="page-home">
+            <div class="hero-content">
+                <div class="official-badge">✦ Official Fan Club ✦</div>
+                <h1 class="hero-title">
+                    <span class="line1">WELCOME TO</span>
+                    <span class="line2 gradient-animate">KUNAVARAM</span>
+                    <span class="line3 gradient-animate">MAHESH BABU</span>
+                    <span class="line4 gradient-animate">FANS CLUB</span>
+                </h1>
+                <p class="hero-subtitle">Dedicated to the Superstar of Telugu Cinema</p>
+                <div class="divider">
+                    <span></span><i class="fas fa-film"></i><span></span>
+                </div>
+                <p class="hero-quote-bold">WE ARE JUST ONE OF MILLIONS OF FANS,</p>
+                <p class="hero-quote-italic">but our love and respect for you is ENDLESS, ANNA! ❤️</p>
+                <p class="hero-jai">JAI BABU</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-primary" data-page="mahesh"><i class="fas fa-play"></i> Explore Mahesh</a>
+                    <a href="#" class="btn btn-secondary" data-page="celebrations"><i class="fas fa-calendar-alt"></i> Celebrations</a>
+                </div>
+                <div class="social-bar">
+                    <a href="https://www.instagram.com/kunavaram_dhfms?igsh=MWpnaThvNHVxZnBpZw==" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                    <a href="#"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CELEBRATIONS PAGE -->
+        <section class="page" id="page-celebrations">
+            <div class="page-content">
+                <div class="page-header">
+                    <h1><i class="fas fa-glass-cheers"></i> Celebrations</h1>
+                    <div class="header-line"></div>
+                    <p class="page-desc">Join us in celebrating the milestones of our Superstar</p>
+                </div>
+                <div class="celebrations-grid">
+                    <div class="celeb-card" data-modal="modal-birthday">
+                        <div class="celeb-icon"><i class="fas fa-birthday-cake"></i></div>
+                        <h3>Birthday Celebrations</h3>
+                        <p>Grand celebrations every August 9th with cake cutting, blood donation camps, and fan gatherings across Kunavaram.</p>
+                        <span class="date-badge">August 9th</span>
+                        <div class="card-click-hint"><i class="fas fa-arrow-right"></i> Click to Explore</div>
+                    </div>
+                    <div class="celeb-card" data-modal="modal-movie">
+                        <div class="celeb-icon"><i class="fas fa-film"></i></div>
+                        <h3>Movie Releases</h3>
+                        <p>First day first show celebrations with flex banners, firecrackers, milk abhishekam to cutouts, and grand rallies.</p>
+                        <span class="date-badge">Every Release</span>
+                        <div class="card-click-hint"><i class="fas fa-arrow-right"></i> Click to Explore</div>
+                    </div>
+                    <div class="celeb-card" data-modal="modal-boxoffice">
+                        <div class="celeb-icon"><i class="fas fa-star"></i></div>
+                        <h3>Box Office Milestones</h3>
+                        <p>Celebrating 100Cr, 200Cr, 300Cr milestones with banner installations and victory rallies.</p>
+                        <span class="date-badge">As They Happen</span>
+                        <div class="card-click-hint"><i class="fas fa-arrow-right"></i> Click to Explore</div>
+                    </div>
+                    <div class="celeb-card" data-modal="modal-fanmeets">
+                        <div class="celeb-icon"><i class="fas fa-users"></i></div>
+                        <h3>Fan Meets</h3>
+                        <p>Regular fan meetups to discuss upcoming projects, share fan art, and connect with fellow fans.</p>
+                        <span class="date-badge">Monthly</span>
+                        <div class="card-click-hint"><i class="fas fa-arrow-right"></i> Click to Explore</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BIRTHDAY MODAL -->
+        <div class="modal-overlay" id="modal-birthday" data-folder="birthday">
+            <div class="modal-content modal-large">
+                <button class="modal-close">&times;</button>
+                <div class="modal-header">
+                    <div class="modal-icon"><i class="fas fa-birthday-cake"></i></div>
+                    <h2>Birthday Celebrations</h2>
+                    <div class="modal-line"></div>
+                </div>
+                <div class="modal-body">
+                    <div class="cloudinary-gallery">
+                        <div class="gallery-section">
+                            <h3><i class="fas fa-images"></i> Photos</h3>
+                            <div class="photos-loading"><i class="fas fa-spinner fa-spin"></i> Loading photos...</div>
+                            <div class="gallery-grid photos-grid"></div>
+                        </div>
+                        <div class="gallery-section">
+                            <h3><i class="fas fa-video"></i> Videos</h3>
+                            <div class="videos-loading"><i class="fas fa-spinner fa-spin"></i> Loading videos...</div>
+                            <div class="gallery-grid videos-grid"></div>
+                        </div>
+                    </div>
+                    <div class="modal-text-section">
+                        <p>Grand celebrations every August 9th with cake cutting, blood donation camps, and fan gatherings across Kunavaram.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MOVIE RELEASES MODAL -->
+        <div class="modal-overlay" id="modal-movie" data-folder="movie">
+            <div class="modal-content modal-large">
+                <button class="modal-close">&times;</button>
+                <div class="modal-header">
+                    <div class="modal-icon"><i class="fas fa-film"></i></div>
+                    <h2>Movie Releases</h2>
+                    <div class="modal-line"></div>
+                </div>
+                <div class="modal-body">
+                    <div class="cloudinary-gallery">
+                        <div class="gallery-section">
+                            <h3><i class="fas fa-images"></i> Photos</h3>
+                            <div class="photos-loading"><i class="fas fa-spinner fa-spin"></i> Loading photos...</div>
+                            <div class="gallery-grid photos-grid"></div>
+                        </div>
+                        <div class="gallery-section">
+                            <h3><i class="fas fa-video"></i> Videos</h3>
+                            <div class="videos-loading"><i class="fas fa-spinner fa-spin"></i> Loading videos...</div>
+                            <div class="gallery-grid videos-grid"></div>
+                        </div>
+                    </div>
+                    <div class="modal-text-section">
+                        <p>First day first show celebrations with flex banners, firecrackers, milk abhishekam to cutouts, and grand rallies.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOX OFFICE MODAL -->
+        <div class="modal-overlay" id="modal-boxoffice" data-folder="boxoffice">
+            <div class="modal-content modal-large">
+                <button class="modal-close">&times;</button>
+                <div class="modal-header">
+                    <div class="modal-icon"><i class="fas fa-star"></i></div>
+                    <h2>Box Office Milestones</h2>
+                    <div class="modal-line"></div>
+                </div>
+                <div class="modal-body">
+                    <div class="cloudinary-gallery">
+                        <div class="gallery-section">
+                            <h3><i class="fas fa-images"></i> Photos</h3>
+                            <div class="photos-loading"><i class="fas fa-spinner fa-spin"></i> Loading photos...</div>
+                            <div class="gallery-grid photos-grid"></div>
+                        </div>
+                    </div>
+                    <div class="boxoffice-stats">
+                        <div class="stat-card stat-hit">
+                            <div class="stat-number">2</div>
+                            <div class="stat-label">HIT</div>
+                        </div>
+                        <div class="stat-card stat-avg">
+                            <div class="stat-number">7</div>
+                            <div class="stat-label">AVERAGE</div>
+                        </div>
+                        <div class="stat-card stat-flop">
+                            <div class="stat-number">8</div>
+                            <div class="stat-label">FLOP</div>
+                        </div>
+                        <div class="stat-card stat-superhit">
+                            <div class="stat-number">1</div>
+                            <div class="stat-label">SUPER HIT</div>
+                        </div>
+                        <div class="stat-card stat-blockbuster">
+                            <div class="stat-number">5</div>
+                            <div class="stat-label">BLOCKBUSTER</div>
+                        </div>
+                        <div class="stat-card stat-industry">
+                            <div class="stat-number">5</div>
+                            <div class="stat-label">INDUSTRY HIT</div>
+                        </div>
+                    </div>
+                    <div class="boxoffice-highlight">
+                        <div class="highlight-card">
+                            <i class="fas fa-trophy"></i>
+                            <div>
+                                <span class="highlight-title">Highest Grosser</span>
+                                <span class="highlight-value">Guntur Kaaram — ₹255 Cr</span>
+                            </div>
+                        </div>
+                        <div class="highlight-card">
+                            <i class="fas fa-chart-line"></i>
+                            <div>
+                                <span class="highlight-title">Most Profitable</span>
+                                <span class="highlight-value">Pokiri — ₹54 Cr Profit (12→66)</span>
+                            </div>
+                        </div>
+                        <div class="highlight-card">
+                            <i class="fas fa-film"></i>
+                            <div>
+                                <span class="highlight-title">Total Films</span>
+                                <span class="highlight-value">28 Released + 1 Coming Soon</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="movie-table-container">
+                        <table class="movie-table">
+                            <thead>
+                                <tr>
+                                    <th>Year</th>
+                                    <th>Movie</th>
+                                    <th>Budget (₹ Cr)</th>
+                                    <th>Worldwide Gross (₹ Cr)</th>
+                                    <th>Verdict</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1999</td><td>Raja Kumarudu</td><td>3</td><td>10</td><td><span class="verdict hit">HIT</span></td></tr>
+                                <tr><td>2000</td><td>Yuvaraju</td><td>4</td><td>8</td><td><span class="verdict avg">AVERAGE</span></td></tr>
+                                <tr><td>2000</td><td>Vamsi</td><td>5</td><td>7</td><td><span class="verdict flop">FLOP</span></td></tr>
+                                <tr><td>2001</td><td>Murari</td><td>8</td><td>22</td><td><span class="verdict blockbuster">BLOCKBUSTER</span></td></tr>
+                                <tr><td>2002</td><td>Takkari Donga</td><td>10</td><td>20</td><td><span class="verdict avg">AVERAGE</span></td></tr>
+                                <tr><td>2002</td><td>Bobby</td><td>12</td><td>16</td><td><span class="verdict flop">FLOP</span></td></tr>
+                                <tr><td>2003</td><td>Okkadu</td><td>13</td><td>39</td><td><span class="verdict industry">INDUSTRY HIT</span></td></tr>
+                                <tr><td>2003</td><td>Nijam</td><td>8</td><td>12</td><td><span class="verdict avg">AVERAGE</span></td></tr>
+                                <tr><td>2004</td><td>Naani</td><td>15</td><td>20</td><td><span class="verdict flop">FLOP</span></td></tr>
+                                <tr><td>2004</td><td>Arjun</td><td>18</td><td>33</td><td><span class="verdict avg">AVERAGE</span></td></tr>
+                                <tr><td>2005</td><td>Athadu</td><td>16</td><td>32</td><td><span class="verdict hit">HIT</span></td></tr>
+                                <tr><td>2006</td><td>Pokiri</td><td>12</td><td>66</td><td><span class="verdict industry">INDUSTRY HIT</span></td></tr>
+                                <tr><td>2006</td><td>Sainikudu</td><td>26</td><td>31</td><td><span class="verdict flop">FLOP</span></td></tr>
+                                <tr><td>2007</td><td>Athidhi</td><td>28</td><td>38</td><td><span class="verdict avg">AVERAGE</span></td></tr>
+                                <tr><td>2010</td><td>Khaleja</td><td>30</td><td>45</td><td><span class="verdict flop">FLOP</span></td></tr>
+                                <tr><td>2011</td><td>Dookudu</td><td>35</td><td>101</td><td><span class="verdict industry">INDUSTRY HIT</span></td></tr>
+                                <tr><td>2011</td><td>Businessman</td><td>40</td><td>92</td><td><span class="verdict blockbuster">BLOCKBUSTER</span></td></tr>
+                                <tr><td>2012</td><td>SVSC</td><td>50</td><td>90</td><td><span class="verdict superhit">SUPER HIT</span></td></tr>
+                                <tr><td>2013</td><td>1: Nenokkadine</td><td>70</td><td>75</td><td><span class="verdict flop">FLOP</span></td></tr>
+                                <tr><td>2014</td><td>Aagadu</td><td>60</td><td>85</td><td><span class="verdict avg">AVERAGE</span></td></tr>
+                                <tr><td>2015</td><td>Srimanthudu</td><td>60</td><td>145</td><td><span class="verdict industry">INDUSTRY HIT</span></td></tr>
+                                <tr><td>2016</td><td>Brahmotsavam</td><td>75</td><td>87</td><td><span class="verdict flop">FLOP</span></td></tr>
+                                <tr><td>2017</td><td>Spyder</td><td>120</td><td>150</td><td><span class="verdict flop">FLOP</span></td></tr>
+                                <tr><td>2018</td><td>Bharat Ane Nenu</td><td>65</td><td>225</td><td><span class="verdict blockbuster">BLOCKBUSTER</span></td></tr>
+                                <tr><td>2019</td><td>Maharshi</td><td>100</td><td>176</td><td><span class="verdict blockbuster">BLOCKBUSTER</span></td></tr>
+                                <tr><td>2020</td><td>Sarileru Neekevvaru</td><td>85</td><td>215</td><td><span class="verdict industry">INDUSTRY HIT</span></td></tr>
+                                <tr><td>2022</td><td>Sarkaru Vaari Paata</td><td>125</td><td>205</td><td><span class="verdict blockbuster">BLOCKBUSTER</span></td></tr>
+                                <tr><td>2024</td><td>Guntur Kaaram</td><td>200</td><td>255</td><td><span class="verdict avg">AVERAGE</span></td></tr>
+                                <tr><td>2027</td><td>Varanasi</td><td>1000+</td><td>Coming Soon</td><td><span class="verdict upcoming">UPCOMING</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAN MEETS MODAL -->
+        <div class="modal-overlay" id="modal-fanmeets" data-folder="fanmeets">
+            <div class="modal-content modal-large">
+                <button class="modal-close">&times;</button>
+                <div class="modal-header">
+                    <div class="modal-icon"><i class="fas fa-users"></i></div>
+                    <h2>Fan Meets</h2>
+                    <div class="modal-line"></div>
+                </div>
+                <div class="modal-body">
+                    <div class="cloudinary-gallery">
+                        <div class="gallery-section">
+                            <h3><i class="fas fa-images"></i> Photos</h3>
+                            <div class="photos-loading"><i class="fas fa-spinner fa-spin"></i> Loading photos...</div>
+                            <div class="gallery-grid photos-grid"></div>
+                        </div>
+                        <div class="gallery-section">
+                            <h3><i class="fas fa-video"></i> Videos</h3>
+                            <div class="videos-loading"><i class="fas fa-spinner fa-spin"></i> Loading videos...</div>
+                            <div class="gallery-grid videos-grid"></div>
+                        </div>
+                    </div>
+                    <div class="modal-text-section">
+                        <p>Regular fan meetups to discuss upcoming projects, share fan art, and connect with fellow fans.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DONATIONS PAGE -->
+        <section class="page" id="page-donations">
+            <div class="page-content">
+                <div class="page-header">
+                    <h1><i class="fas fa-hand-holding-heart"></i> Donations</h1>
+                    <div class="header-line"></div>
+                    <p class="page-desc">Giving back to society, inspired by our Superstar's philanthropy</p>
+                </div>
+                <div class="donations-container">
+                    <div class="donation-hero">
+                        <i class="fas fa-heart"></i>
+                        <h2>Our Community Initiatives</h2>
+                        <p>Inspired by Mahesh Babu's dedication to social causes, our fans club actively participates in charitable activities across Kunavaram and surrounding areas.</p>
+                    </div>
+                    <div class="donation-cards" id="donationCards">
+                        <!-- Populated by donations-config.js -->
+                    </div>
+
+                    <!-- Donations Modals -->
+                    <div class="modal-overlay" id="modal-donation-education" data-donation="education">
+                        <div class="modal-content">
+                            <button class="modal-close">&times;</button>
+                            <div class="modal-header">
+                                <div class="modal-icon"><i class="fas fa-book"></i></div>
+                                <h2>Education Support</h2>
+                                <div class="modal-line"></div>
+                            </div>
+                            <div class="modal-body">
+                                <div class="donation-stats-bar" id="donationStatsEducation"></div>
+                                <div class="donation-table-container">
+                                    <table class="donation-table" id="donationTableEducation">
+                                        <thead></thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                                <div class="donation-empty" id="donationEmptyEducation" style="display:none;">
+                                    <i class="fas fa-folder-open"></i>
+                                    <p>No records yet. Add data in donations-data.js</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-overlay" id="modal-donation-food" data-donation="food">
+                        <div class="modal-content">
+                            <button class="modal-close">&times;</button>
+                            <div class="modal-header">
+                                <div class="modal-icon"><i class="fas fa-utensils"></i></div>
+                                <h2>Food Drives</h2>
+                                <div class="modal-line"></div>
+                            </div>
+                            <div class="modal-body">
+                                <div class="donation-stats-bar" id="donationStatsFood"></div>
+                                <div class="donation-table-container">
+                                    <table class="donation-table" id="donationTableFood">
+                                        <thead></thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                                <div class="donation-empty" id="donationEmptyFood" style="display:none;">
+                                    <i class="fas fa-folder-open"></i>
+                                    <p>No records yet. Add data in donations-data.js</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-overlay" id="modal-donation-tree" data-donation="tree">
+                        <div class="modal-content">
+                            <button class="modal-close">&times;</button>
+                            <div class="modal-header">
+                                <div class="modal-icon"><i class="fas fa-tree"></i></div>
+                                <h2>Tree Plantation</h2>
+                                <div class="modal-line"></div>
+                            </div>
+                            <div class="modal-body">
+                                <div class="donation-stats-bar" id="donationStatsTree"></div>
+                                <div class="donation-table-container">
+                                    <table class="donation-table" id="donationTableTree">
+                                        <thead></thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                                <div class="donation-empty" id="donationEmptyTree" style="display:none;">
+                                    <i class="fas fa-folder-open"></i>
+                                    <p>No records yet. Add data in donations-data.js</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-overlay" id="modal-donation-blood" data-donation="blood">
+                        <div class="modal-content">
+                            <button class="modal-close">&times;</button>
+                            <div class="modal-header">
+                                <div class="modal-icon"><i class="fas fa-tint"></i></div>
+                                <h2>Blood Donation Camps</h2>
+                                <div class="modal-line"></div>
+                            </div>
+                            <div class="modal-body">
+                                <div class="donation-stats-bar" id="donationStatsBlood"></div>
+                                <div class="donation-table-container">
+                                    <table class="donation-table" id="donationTableBlood">
+                                        <thead></thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                                <div class="donation-empty" id="donationEmptyBlood" style="display:none;">
+                                    <i class="fas fa-folder-open"></i>
+                                    <p>No records yet. Add data in donations-data.js</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="donate-cta">
+                        <h3>Want to Contribute?</h3>
+                        <p>Contact us to join our donation drives or contribute to our community initiatives.</p>
+                        <a href="https://www.instagram.com/kunavaram_dhfms?igsh=MWpnaThvNHVxZnBpZw==" target="_blank" class="btn btn-primary"><i class="fab fa-instagram"></i> Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT MAHESH PAGE -->
+        <section class="page" id="page-mahesh">
+            <div class="page-content">
+                <div class="page-header">
+                    <h1><i class="fas fa-star"></i> About Mahesh Babu</h1>
+                    <div class="header-line"></div>
+                    <p class="page-desc">The Prince of Telugu Cinema</p>
+                </div>
+                <div class="mahesh-container">
+                    <div class="mahesh-bio">
+                        <div class="bio-section">
+                            <h2><i class="fas fa-user"></i> Personal Life</h2>
+                            <p>Mahesh Babu, born on August 9, 1975, in Chennai, Tamil Nadu, is the son of legendary Telugu actor Krishna and Vijaya Nirmala. He grew up in the film industry and started his career as a child artist before making his debut as a lead actor in "Rajakumarudu" in 1999.</p>
+                        </div>
+                        <div class="bio-section">
+                            <h2><i class="fas fa-film"></i> Career Highlights</h2>
+                            <p>With over 25 years in the industry, Mahesh Babu has delivered numerous blockbusters including Murari, Okkadu, Pokiri, Dookudu, Businessman, Srimanthudu, Bharat Ane Nenu, Maharshi, Sarileru Neekevvaru, and Sarkaru Vaari Paata. He has won 9 Nandi Awards and 5 Filmfare Awards South.</p>
+                        </div>
+                        <div class="bio-section">
+                            <h2><i class="fas fa-heart"></i> Philanthropy</h2>
+                            <p>Beyond cinema, Mahesh Babu is known for his charitable work. He has adopted the village of Buripalem in Andhra Pradesh and Siddhapuram in Telangana, and has been actively involved in various social causes including education and healthcare initiatives.</p>
+                        </div>
+                        <div class="bio-section">
+                            <h2><i class="fas fa-baby"></i> First Mother's Milk Bank</h2>
+                            <p>A major milestone in child healthcare was achieved as Namrata Shirodkar, trustee of the Mahesh Babu Foundation, inaugurated Andhra Pradesh's first Mothers' Milk Bank at Andhra Hospitals, Vijayawada. In collaboration with Rotary Club of Vijayawada and Rotary International, the milk bank provides safe, pasteurized donor breast milk to newborns whose mothers are unable to breastfeed, helping over 7,200 infants annually.</p>
+                        </div>
+                        <div class="bio-section">
+                            <h2><i class="fas fa-heartbeat"></i> Children Cardiac Surgical Camp</h2>
+                            <p>The Mahesh Babu Foundation organized a Children Cardiac Surgical Camp in collaboration with Healing Little Hearts, UK and Andhra Hospitals. Four children underwent successful heart surgery during the camp on February 20, 2024. All children recovered well and were discharged, giving them a second chance at life.</p>
+                        </div>
+                        <div class="bio-section">
+                            <h2><i class="fas fa-venus"></i> Menstrual Hygiene Awareness</h2>
+                            <p>The Mahesh Babu Foundation conducted awareness programs on menstrual hygiene for orphan kids. This initiative aims to educate young girls about personal hygiene and health, breaking the stigma around menstruation and ensuring a healthier future for underprivileged children.</p>
+                        </div>
+                        <div class="bio-section">
+                            <h2><i class="fas fa-heartbeat"></i> Saving Hearts</h2>
+                            <p>The Mahesh Babu Foundation has funded over 7000+ heart surgeries for children from underprivileged families in collaboration with Andhra Hospitals and Rainbow Hospitals. Inspired by his own son Gautam's premature birth experience, Mahesh Babu has been providing financial assistance to families with newborn babies diagnosed with heart ailments.</p>
+                        </div>
+                        <div class="bio-section">
+                            <h2><i class="fas fa-hospital"></i> Free Medical Camps</h2>
+                            <p>The Foundation conducts almost 100+ free medical camps every month across Andhra Pradesh and Telangana. These multispeciality health camps provide free consultations, diagnostic investigations, and essential medicines to rural communities. The 45th mega multispeciality camp at Burripalem alone benefited 132 adults and children.</p>
+                        </div>
+                        <div class="bio-section">
+                            <h2><i class="fas fa-graduation-cap"></i> Scholarships</h2>
+                            <p>The Mahesh Babu Foundation provides 50+ scholarships for medical students through the Superstar Krishna Scholarship Fund. This initiative supports meritorious and underprivileged students across Andhra Pradesh and Telangana in achieving their academic dreams and gaining crucial skills for their future.</p>
+                        </div>
+                        <div class="bio-section">
+                            <h2><i class="fas fa-ear-listen"></i> Bringing Sound to Young Lives</h2>
+                            <p>Mahesh Babu Foundation has received FCRA approval and collaborated with NATS Foundation for the first time to support underprivileged children with hearing disabilities. This groundbreaking initiative helps them hear a brighter tomorrow, ensuring every child has access to the gift of sound and a brighter future for the next generation.</p>
+                        </div>
+                        <div class="bio-section">
+                            <h2><i class="fas fa-child"></i> Child Health Initiatives</h2>
+                            <p>The Foundation regularly organizes mega child health camps in adopted villages. A recent camp at Burripalem with Andhra Hospitals benefited 115 children with free checkups and medicines. MB Foundation also conducted a Children Cardiac Surgical Camp with Healing Little Hearts, UK, where four children underwent successful heart surgery.</p>
+                        </div>
+                        <div class="bio-section">
+                            <h2><i class="fas fa-syringe"></i> HPV Vaccination Drives</h2>
+                            <p>The Mahesh Babu Foundation conducted free HPV vaccination drives in Vijayawada for girls, promoting preventive healthcare and women's empowerment. This initiative aims to protect young girls from cervical cancer and ensure a healthier future for the next generation.</p>
+                        </div>
+                        <div class="foundation-link">
+                            <a href="https://www.maheshbabufoundation.org/" target="_blank" class="btn btn-primary"><i class="fas fa-external-link-alt"></i> Mahesh Babu Foundation</a>
+                            <span class="for-more">for more</span>
+                        </div>
+                    </div>
+                    <div class="mahesh-facts">
+                        <h3>Quick Facts</h3>
+                        <div class="fact-item"><span class="fact-label">Full Name</span><span class="fact-value">Mahesh Ghattamaneni</span></div>
+                        <div class="fact-item"><span class="fact-label">Date of Birth</span><span class="fact-value">August 9, 1975</span></div>
+                        <div class="fact-item"><span class="fact-label">Birthplace</span><span class="fact-value">Chennai, Tamil Nadu</span></div>
+                        <div class="fact-item"><span class="fact-label">Debut Film</span><span class="fact-value">Rajakumarudu (1999)</span></div>
+                        <div class="fact-item"><span class="fact-label">Spouse</span><span class="fact-value">Namrata Shirodkar</span></div>
+                        <div class="fact-item"><span class="fact-label">Children</span><span class="fact-value">Gautham Krishna, Sitara</span></div>
+                        <div class="fact-item"><span class="fact-label">Awards</span><span class="fact-value">9 Nandi, 5 Filmfare</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT US PAGE -->
+        <section class="page" id="page-about">
+            <div class="page-content">
+                <div class="page-header">
+                    <h1><i class="fas fa-users"></i> About Us</h1>
+                    <div class="header-line"></div>
+                    <p class="page-desc">The heart and soul of Kunavaram's Mahesh Babu fandom</p>
+                </div>
+                <div class="about-container">
+                    <div class="about-story">
+                        <h2><i class="fas fa-book-open"></i> Our Story</h2>
+                        <p>The Kunavaram Mahesh Babu Fans Club (KMBFC) was established with a vision to bring together fans of Superstar Mahesh Babu in and around Kunavaram. Our club is not just about watching movies — it's about building a community that shares the same passion and admiration for the Prince of Telugu Cinema.</p>
+                        <p>Since our inception, we have organized numerous events, celebrations, and charitable activities that reflect the values our idol stands for. From grand movie celebrations to community service, we strive to make a positive impact in our society.</p>
+                    </div>
+                    <div class="about-values">
+                        <h2><i class="fas fa-gem"></i> Our Values</h2>
+                        <div class="values-grid">
+                            <div class="value-card">
+                                <i class="fas fa-users"></i>
+                                <h4>Unity</h4>
+                                <p>Bringing fans together as one family</p>
+                            </div>
+                            <div class="value-card">
+                                <i class="fas fa-hand-holding-heart"></i>
+                                <h4>Service</h4>
+                                <p>Giving back to our community</p>
+                            </div>
+                            <div class="value-card">
+                                <i class="fas fa-star"></i>
+                                <h4>Passion</h4>
+                                <p>Unwavering dedication to our Superstar</p>
+                            </div>
+                            <div class="value-card">
+                                <i class="fas fa-shield-alt"></i>
+                                <h4>Respect</h4>
+                                <p>Upholding the dignity of our club</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-contact">
+                        <h2><i class="fas fa-envelope"></i> Contact Us</h2>
+                        <div class="contact-grid">
+                            <a href="https://www.google.com/maps?q=16.4475,81.8828" target="_blank" class="contact-item map-link">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Kunavaram, Razole Mandal, Konaseema District, Andhra Pradesh</span>
+                            </a>
+                            <a href="mailto:kunavarammbfc@gmail.com" class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>kunavarammbfc@gmail.com</span>
+                            </a>
+                            <a href="https://www.instagram.com/kunavaram_dhfms?igsh=MWpnaThvNHVxZnBpZw==" target="_blank" class="contact-item">
+                                <i class="fab fa-instagram"></i>
+                                <span>Kunavaram Mahesh Babu Fans Club</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- SECRET ADMIN PANEL -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-header">
+            <h3><i class="fas fa-cog"></i> Admin Panel</h3>
+            <button class="admin-close" onclick="document.getElementById('adminPanel').classList.remove('active')">&times;</button>
+        </div>
+        <div class="admin-body">
+            <div class="admin-sync-status">
+                <i class="fas fa-sync-alt"></i>
+                <strong>Auto-Sync Active</strong>
+                <p>Upload photos/videos to Cloudinary and they appear automatically.</p>
+            </div>
+
+            <div class="admin-info">
+                <strong>Cloudinary Folder Structure:</strong>
+                <pre>kmbfc-media/
+├── birthday/photos/  & videos/
+├── movie-releases/photos/  & videos/
+├── box-office/photos/  & videos/
+└── fan-meets/photos/  & videos/</pre>
+            </div>
+
+            <button class="admin-save" onclick="refreshGallery()">
+                <i class="fas fa-sync-alt"></i> Refresh Gallery Now
+            </button>
+
+            <p class="admin-tip">
+                <i class="fas fa-info-circle"></i>
+                Galleries auto-refresh every 5 minutes. Click above to force refresh.
+            </p>
+        </div>
+    </div>
+
+    <!-- Hidden admin trigger - click the crown icon 5 times -->
+    <div class="admin-trigger" id="adminTrigger" onclick="toggleAdmin()"></div>
+
+    <footer class="footer">
+        <p>&copy; 2026 Kunavaram Mahesh Babu Fans Club. All Rights Reserved.</p>
+        <p class="footer-sub">Made with <i class="fas fa-heart"></i> by KMBFC Team</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

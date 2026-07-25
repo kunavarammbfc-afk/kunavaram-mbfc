@@ -1,0 +1,8 @@
+{
+  "name": "kunavaram-mbfc",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "cloudinary": "^2.5.1"
+  }
+}
