@@ -13,7 +13,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Playfair+Display:wght@400;600;700;900&family=Poppins:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="cloudinary-config.js"></script>
-    <script src="media-config.js"></script>
     <script src="donations-data.js"></script>
 </head>
 <body>
@@ -567,42 +566,6 @@
             </div>
         </section>
     </main>
-
-    <!-- SECRET ADMIN PANEL -->
-    <div class="admin-panel" id="adminPanel">
-        <div class="admin-header">
-            <h3><i class="fas fa-cog"></i> Admin Panel</h3>
-            <button class="admin-close" onclick="document.getElementById('adminPanel').classList.remove('active')">&times;</button>
-        </div>
-        <div class="admin-body">
-            <div class="admin-sync-status">
-                <i class="fas fa-sync-alt"></i>
-                <strong>Auto-Sync Active</strong>
-                <p>Upload photos/videos to Cloudinary and they appear automatically.</p>
-            </div>
-
-            <div class="admin-info">
-                <strong>Cloudinary Folder Structure:</strong>
-                <pre>kmbfc-media/
-├── birthday/photos/  & videos/
-├── movie-releases/photos/  & videos/
-├── box-office/photos/  & videos/
-└── fan-meets/photos/  & videos/</pre>
-            </div>
-
-            <button class="admin-save" onclick="refreshGallery()">
-                <i class="fas fa-sync-alt"></i> Refresh Gallery Now
-            </button>
-
-            <p class="admin-tip">
-                <i class="fas fa-info-circle"></i>
-                Galleries auto-refresh every 5 minutes. Click above to force refresh.
-            </p>
-        </div>
-    </div>
-
-    <!-- Hidden admin trigger - click the crown icon 5 times -->
-    <div class="admin-trigger" id="adminTrigger" onclick="toggleAdmin()"></div>
 
     <footer class="footer">
         <p>&copy; 2026 Kunavaram Mahesh Babu Fans Club. All Rights Reserved.</p>

@@ -462,19 +462,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (apiData && apiData[folderKey]) {
             photos = apiData[folderKey].photos || [];
             videos = apiData[folderKey].videos || [];
-        } else if (typeof MEDIA_CONFIG !== 'undefined') {
-            // Fallback to static config
-            const configMap = {
-                birthday: 'birthday',
-                movie: 'movieReleases',
-                boxoffice: 'boxOffice',
-                fanmeets: 'fanMeets'
-            };
-            const configKey = configMap[folderKey];
-            if (configKey && MEDIA_CONFIG[configKey]) {
-                photos = (MEDIA_CONFIG[configKey].photos || []).map(id => ({ id, name: id.split('/').pop() }));
-                videos = (MEDIA_CONFIG[configKey].videos || []).map(id => ({ id, name: id.split('/').pop() }));
-            }
         }
 
         if (photos.length === 0) {
@@ -512,65 +499,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     initCloudinaryGalleries();
-
-    // ============================================
-    // ADMIN PANEL
-    // ============================================
-    
-    let adminClickCount = 0;
-    let adminClickTimer = null;
-
-    // Secret trigger - click crown icon 5 times
-    document.querySelector('.brand-icon').addEventListener('click', function() {
-        adminClickCount++;
-        
-        clearTimeout(adminClickTimer);
-        adminClickTimer = setTimeout(() => {
-            adminClickCount = 0;
-        }, 1000);
-        
-        if (adminClickCount >= 5) {
-            adminClickCount = 0;
-            toggleAdmin();
-        }
-    });
-
-    // Toggle admin panel
-    window.toggleAdmin = function() {
-        const panel = document.getElementById('adminPanel');
-        const overlay = document.querySelector('.admin-overlay') || createAdminOverlay();
-        
-        if (panel.classList.contains('active')) {
-            panel.classList.remove('active');
-            overlay.classList.remove('active');
-        } else {
-            panel.classList.add('active');
-            overlay.classList.add('active');
-        }
-    };
-
-    // Create overlay
-    function createAdminOverlay() {
-        const overlay = document.createElement('div');
-        overlay.className = 'admin-overlay';
-        overlay.onclick = function() {
-            document.getElementById('adminPanel').classList.remove('active');
-            this.classList.remove('active');
-        };
-        document.body.appendChild(overlay);
-        return overlay;
-    }
-
-    window.refreshGallery = function() {
-        galleryCache = null;
-        document.querySelectorAll('.modal-overlay[data-folder]').forEach(modal => {
-            delete modal.dataset.loaded;
-            const gallery = modal.querySelector('.cloudinary-gallery');
-            if (gallery) {
-                gallery.querySelector('.photos-grid').innerHTML = '';
-                gallery.querySelector('.videos-grid').innerHTML = '';
-            }
-        });
-        alert('Galleries refreshed!');
-    };
 });
