@@ -57,7 +57,6 @@ module.exports = async function handler(req, res) {
     do {
       const search = cloudinary.search
         .expression('resource_type:image OR resource_type:video')
-        .with_field('asset_folder')
         .sort_by('created_at', 'asc')
         .max_results(500);
       if (cursor) search.next_cursor(cursor);
