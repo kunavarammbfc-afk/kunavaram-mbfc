@@ -342,14 +342,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function downloadFile(url, filename) {
-        var a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        a.target = '_blank';
-        a.rel = 'noopener noreferrer';
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(function() { document.body.removeChild(a); }, 100);
+        fetch(url).then(function(res) {
+            return res.blob();
+        }).then(function(blob) {
+            var blobUrl = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = blobUrl;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(function() {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(blobUrl);
+            }, 100);
+        }).catch(function() {
+            window.open(url, '_blank');
+        });
     }
 
     var lightboxOverlay = null;
