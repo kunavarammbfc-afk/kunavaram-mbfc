@@ -1632,11 +1632,15 @@ body {
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 1px;
+    min-width: 150px;
+    flex-shrink: 0;
 }
 
 .fact-value {
     font-size: 14px;
     color: var(--white);
+    text-align: right;
+    flex: 1;
     font-weight: 600;
 }
 
@@ -2154,6 +2158,10 @@ body {
     .fact-item {
         padding: 12px 15px;
         font-size: 13px;
+    }
+
+    .fact-label {
+        min-width: 110px;
     }
 
     .admin-trigger {
